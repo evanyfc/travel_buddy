@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Travel Dashboard</title>
+  </head>
+  <body>
+    <h1>Hello {{request.session.user.name}}</h1>
+    <a href="{% url 'users:logout' %}">Logout</a>
+
+    <h2>Your Trip Schedules</h2>
+    <table cellspacing="10">
+      <thead>
+        <tr>
+          <th>Destination</th>
+          <th>Travel Start Date</th>
+          <th>Travel End Date</th>
+          <th>Plan</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for travel in travels %}
+        <tr>
+          <td><a href="{% url 'travels:show' travel.id %}">{{travel.destination}}</a></td>
+          <td>{{travel.start_date|date:"M d Y"}}</td>
+          <td>{{travel.end_date|date:"M d Y"}}</td>
+          <td>{{travel.description}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <h2>Other User's Travel Plans</h2>
+    <table cellspacing="10">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Destination</th>
+          <th>Travel Start Date</th>
+          <th>Travel End Date</th>
+          <th>Do You Want to Join?</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for travel in other_travels %}
+        <tr>
+          <td>{{travel.user.name}}</td>
+          <td><a href="{% url 'travels:show' travel.id %}">{{travel.destination}}</a></td>
+          <td>{{travel.start_date|date:"M d Y"}}</td>
+          <td>{{travel.end_date|date:"M d Y"}}</td>
+          <td><a href="{% url 'travels:jointrip' travel.id %}">Join</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <a href="{% url 'travels:add' %}">Add a new travel</a>
+  </body>
+</html>

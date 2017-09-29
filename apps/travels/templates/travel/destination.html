@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Destination</title>
+  </head>
+  <body>
+    <a href="{% url 'travels:index' %}">Home</a>
+    <a href="{% url 'users:logout' %}">Logout</a>
+    <h1>{{travel.destination}}</h1>
+    <h4>Planned By: {{travel.user.name}}</h2>
+    <h4>Description: {{travel.description}}</h2>
+    <h4>Travel Date From: {{travel.start_date|date:"M d Y"}}</h4>
+    <h4>Travel Date To: {{travel.end_date|date:"M d Y"}}</h4>
+    <br>
+    <h1>Other user's joining the trip:</h1>
+    <ul>
+    {% for participant in travel.participants.all %}
+      {% if participant.name != travel.user.name %}
+      <li>{{participant.name}}</li>
+      {% endif %}
+    {% endfor %}
+    </ul>
+  </body>
+</html>
